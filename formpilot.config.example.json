@@ -1,0 +1,14 @@
+{
+  "allowedHosts": ["dropee_enterprise.test", "*.staging.example.com"],
+  "headless": true,
+  "profiles": {
+    "mgmt": {
+      "loginUrl": "https://dropee_enterprise.test/login",
+      "fields": {
+        "email": "qa@example.com",
+        "password": "$FORMPILOT_MGMT_PASSWORD"
+      },
+      "submit": "button[type=submit]"
+    }
+  }
+}

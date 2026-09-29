@@ -1,0 +1,29 @@
+{
+  "name": "formpilot",
+  "version": "0.1.0",
+  "description": "MCP server + CLI that lets an AI coding agent fill and submit web forms for testing, via Playwright.",
+  "type": "module",
+  "bin": {
+    "formpilot": "./dist/src/cli.js"
+  },
+  "main": "./dist/src/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/src/index.js",
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "postinstall": "playwright install chromium --with-deps || playwright install chromium || true"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "playwright": "^1.49.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
