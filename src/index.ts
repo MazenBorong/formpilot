@@ -50,7 +50,7 @@ server.registerTool(
     description:
       "Generate realistic, valid test data for a form schema (as returned by inspect_form) without touching the browser — lets the agent review/edit data before submitting.",
     inputSchema: {
-      schema: z.any().describe("A FormSchema object, as returned by inspect_form"),
+      schema: z.record(z.any()).describe("A FormSchema object, as returned by inspect_form"),
       overrides: z.record(z.any()).optional().describe("Field values to pin instead of generating"),
       seed: z.number().optional().describe("Make faker-generated values repeatable across runs"),
     },

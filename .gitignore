@@ -3,3 +3,5 @@ dist/
 formpilot-runs/
 .formpilot/
 *.log
+formpilot.config.json
+.claude/

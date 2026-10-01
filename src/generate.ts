@@ -42,7 +42,8 @@ function matchOption(options: { value: string; label: string }[], candidates: st
 
 /** Heuristic value for one field, keyed off its name/label/type/constraints. en-MY locale defaults. */
 function valueFor(field: FieldSchema, fixtureDir: string): string | string[] | boolean | null {
-  const hint = `${field.name} ${field.label ?? ""} ${field.placeholder ?? ""}`.toLowerCase();
+  const leafName = field.name.match(/\[([^\]]+)\]\s*$/)?.[1] ?? field.name;
+  const hint = `${leafName} ${field.label ?? ""} ${field.placeholder ?? ""}`.toLowerCase();
 
   switch (field.type) {
     case "hidden":
@@ -110,7 +111,7 @@ function valueFor(field: FieldSchema, fixtureDir: string): string | string[] | b
     case "other":
     default: {
       if (hint.includes("postcode") || hint.includes("zip")) return clamp(myPostcode(), field.maxLength);
-      if (hint.includes("company") && (hint.includes("reg") || hint.includes("ssm"))) {
+      if (leafName.includes("ssm") || leafName.includes("registration_no") || leafName.includes("reg_no")) {
         return clamp(faker.string.numeric(12), field.maxLength);
       }
       if (hint.includes("company") || hint.includes("business name")) return clamp(faker.company.name(), field.maxLength);
@@ -119,7 +120,7 @@ function valueFor(field: FieldSchema, fixtureDir: string): string | string[] | b
       if (hint.includes("name")) return clamp(faker.person.fullName(), field.maxLength);
       if (hint.includes("address")) return clamp(faker.location.streetAddress(), field.maxLength);
       if (hint.includes("city")) return clamp(faker.location.city(), field.maxLength);
-      if (hint.includes("phone") || hint.includes("mobile")) return clamp(myPhone(), field.maxLength);
+      if (hint.includes("phone") || hint.includes("mobile") || hint.includes("office_no")) return clamp(myPhone(), field.maxLength);
       if (hint.includes("website")) return clamp(faker.internet.url(), field.maxLength);
       return clamp(faker.lorem.words(3), field.maxLength);
     }

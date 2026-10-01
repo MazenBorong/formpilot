@@ -1,14 +1,33 @@
 # formpilot
 
+![node >=20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)
+![license: MIT](https://img.shields.io/badge/license-MIT-blue)
+![Playwright](https://img.shields.io/badge/engine-Playwright-2EAD33?logo=playwright&logoColor=white)
+
 Lets an AI coding agent (Claude Code, Codex) fill out and submit web forms for
 testing, by driving a real browser — no database access, no app code changes.
 
 ```
-"test the register-as-supplier form on dropee_enterprise.test"
+"test the signup form on myapp.test"
   → formpilot opens the page, understands the form, fills every field with
     valid realistic test data, uploads required files, submits, and reports
     exactly what happened.
 ```
+
+## Quickstart
+
+First time:
+
+1. `git clone https://github.com/MazenBorong/formpilot.git && cd formpilot && npm run setup` — installs deps, builds, creates `formpilot.config.json`, registers the MCP server with Claude Code/Codex.
+2. Open `formpilot.config.json` and add your test host (e.g. `myapp.test`) to `allowedHosts`.
+
+Every day after that:
+
+3. Open Claude Code or Codex in any project.
+4. Ask: `"use formpilot to dry-run the <form name> form on <your-host>, show me the data, then submit it"`
+5. Check the screenshot + logged payload under `./formpilot-runs/<timestamp>/` if anything looks off.
+
+See below for manual setup, the CLI, login profiles, and tool details.
 
 ## What it is
 
@@ -21,7 +40,7 @@ testing, by driving a real browser — no database access, no app code changes.
 ## Setup (one command)
 
 ```bash
-git clone <this repo> formpilot
+git clone https://github.com/MazenBorong/formpilot.git
 cd formpilot
 npm run setup
 ```
@@ -53,7 +72,7 @@ already registered.
 
 Then in Claude Code or Codex, just ask:
 
-> "use formpilot to dry-run the register-as-supplier form, show me the data,
+> "use formpilot to dry-run the signup form on myapp.test, show me the data,
 > then submit it"
 
 The agent calls `inspect_form`, then `generate_test_data` (so you can
@@ -81,9 +100,9 @@ args = ["/absolute/path/to/formpilot/dist/src/index.js"]
 ### CLI
 
 ```bash
-formpilot fill http://dropee_enterprise.test/register-as-supplier
-formpilot fill http://dropee_enterprise.test/register-as-supplier --dry-run --headed
-formpilot fill http://dropee_enterprise.test/register-as-supplier --data overrides.json --login mgmt
+formpilot fill http://myapp.test/signup
+formpilot fill http://myapp.test/signup --dry-run --headed
+formpilot fill http://myapp.test/signup --data overrides.json --login mgmt
 ```
 
 ## MCP tools
@@ -124,7 +143,7 @@ Define named profiles in `formpilot.config.json`:
 {
   "profiles": {
     "mgmt": {
-      "loginUrl": "https://dropee_enterprise.test/login",
+      "loginUrl": "https://myapp.test/login",
       "fields": { "email": "qa@example.com", "password": "$FORMPILOT_MGMT_PASSWORD" },
       "submit": "button[type=submit]"
     }
@@ -163,3 +182,7 @@ through the full `fill_and_submit` path.
 - `pattern` regex constraints aren't solved generically — common ones fall
   out of the name/label rules, unusual ones may need an `overrides` value.
 - No LLM-assisted field filling yet; deterministic rules + faker only.
+
+## License
+
+[MIT](LICENSE)
