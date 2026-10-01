@@ -26,7 +26,7 @@ server.registerTool(
       url: z.string().url().describe("Page URL to inspect"),
       formSelector: z.string().optional().describe("CSS selector for the form; defaults to the first <form>"),
       loginProfile: z.string().optional().describe("Named profile from formpilot.config.json to log in with first"),
-      headed: z.boolean().optional().describe("Show the browser window instead of running headless"),
+      headed: z.boolean().optional().describe("Show the browser window (default: visible, unless formpilot.config.json sets \"headless\": true)"),
     },
   },
   async ({ url, formSelector, loginProfile, headed }) => {
@@ -73,7 +73,7 @@ server.registerTool(
       loginProfile: z.string().optional(),
       dryRun: z.boolean().optional().describe("Fill and screenshot but do not click submit"),
       seed: z.number().optional().describe("Seed for any auto-generated field values"),
-      headed: z.boolean().optional(),
+      headed: z.boolean().optional().describe("Show the browser window (default: visible, unless formpilot.config.json sets \"headless\": true)"),
     },
   },
   async ({ url, data, formSelector, loginProfile, dryRun, seed, headed }) => {

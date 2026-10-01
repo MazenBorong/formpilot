@@ -1,6 +1,6 @@
 {
   "allowedHosts": ["myapp.test", "*.staging.example.com"],
-  "headless": true,
+  "headless": false,
   "profiles": {
     "mgmt": {
       "loginUrl": "https://myapp.test/login",

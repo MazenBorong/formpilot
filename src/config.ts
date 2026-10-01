@@ -13,7 +13,7 @@ export function loadConfig(): FormpilotConfig {
   return {
     allowedHosts: [...DEFAULT_ALLOWED_HOSTS, ...(userConfig.allowedHosts ?? [])],
     profiles: userConfig.profiles ?? {},
-    headless: userConfig.headless ?? true,
+    headless: userConfig.headless ?? false,
   };
 }
 

@@ -8,7 +8,8 @@
 
 Ask Claude Code or Codex to test a form. formpilot reads the fields, generates
 realistic data, fills it in, uploads files, walks multi-step wizards, and
-submits — no database access, no app code changes.
+submits — no database access, no app code changes. The browser opens visibly
+by default, so you watch it happen live instead of taking it on faith.
 
 <table>
 <tr>
@@ -54,6 +55,8 @@ A `formpilot fill <url>` CLI does all three in one shot for humans.
 
 - Refuses to touch any host not in `allowedHosts` — production is never one
   typo away.
+- Headed (visible) by default — set `"headless": true` in
+  `formpilot.config.json` for CI or quiet background runs.
 - `dryRun: true` fills and screenshots but never clicks submit.
 - Every run's payload and screenshot are saved to `./formpilot-runs/<timestamp>/`.
 
