@@ -18,23 +18,38 @@ by default, so you watch it happen live instead of taking it on faith.
 </tr>
 </table>
 
-## Setup
+## 3 steps
 
-1. ```bash
-   git clone https://github.com/MazenBorong/formpilot.git && cd formpilot && npm run setup
-   ```
-2. Add your test host to `allowedHosts` in `formpilot.config.json`.
+**1. Clone**
 
-## Use it
+```bash
+git clone https://github.com/MazenBorong/formpilot.git && cd formpilot && npm run setup
+```
 
-3. Open Claude Code or Codex.
-4. Ask: *"use formpilot to dry-run the signup form on myapp.test, show me the data, then submit it"*
-5. Check `./formpilot-runs/<timestamp>/` for the screenshot and payload.
+Installs everything (including a Chromium browser), builds, and registers
+formpilot as an MCP server with whichever of Claude Code / Codex is on your
+machine. Safe to re-run anytime.
 
-That's it — `npm run setup` installs everything (including a Chromium
-browser), builds, and registers formpilot as an MCP server with whichever of
-Claude Code / Codex is on your machine. Re-run it anytime, it's a no-op if
-already done.
+**2. Allow your host**
+
+Open `formpilot.config.json` and add the host you're testing to
+`allowedHosts`:
+
+```json
+{ "allowedHosts": ["myapp.test"] }
+```
+
+formpilot refuses to touch any host not on this list — no accidental runs
+against production.
+
+**3. Use it**
+
+Open Claude Code or Codex and ask:
+
+> "use formpilot to dry-run the signup form on myapp.test, show me the data, then submit it"
+
+Watch the browser do it live, then check `./formpilot-runs/<timestamp>/` for
+the screenshot and payload.
 
 ## How it works
 
