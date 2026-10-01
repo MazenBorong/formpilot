@@ -20,34 +20,16 @@ else
   echo "==> formpilot.config.json already exists, leaving it alone"
 fi
 
-SERVER="$ROOT/dist/src/index.js"
-
 if command -v claude >/dev/null 2>&1; then
-  if claude mcp list 2>/dev/null | grep -q '^formpilot'; then
-    echo "==> Claude Code: formpilot already registered"
-  else
-    echo "==> Registering formpilot with Claude Code"
-    claude mcp add formpilot -- node "$SERVER"
-  fi
+  echo "==> Connecting Claude Code"
+  bash "$ROOT/scripts/connect-claude.sh"
 else
   echo "==> Claude Code CLI not found, skipping registration"
 fi
 
-CODEX_CONFIG="$HOME/.codex/config.toml"
 if command -v codex >/dev/null 2>&1 || [ -d "$HOME/.codex" ]; then
-  mkdir -p "$(dirname "$CODEX_CONFIG")"
-  touch "$CODEX_CONFIG"
-  if grep -q '^\[mcp_servers.formpilot\]' "$CODEX_CONFIG" 2>/dev/null; then
-    echo "==> Codex: formpilot already registered"
-  else
-    echo "==> Registering formpilot with Codex ($CODEX_CONFIG)"
-    {
-      echo ""
-      echo "[mcp_servers.formpilot]"
-      echo "command = \"node\""
-      echo "args = [\"$SERVER\"]"
-    } >> "$CODEX_CONFIG"
-  fi
+  echo "==> Connecting Codex"
+  bash "$ROOT/scripts/connect-codex.sh"
 else
   echo "==> Codex not found, skipping registration"
 fi

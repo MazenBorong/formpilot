@@ -37,6 +37,20 @@ All it leaves you to do: open `formpilot.config.json` and add the host(s)
 you want to test to `allowedHosts` (and a login profile, if the form needs
 auth — see [Login](#login) below).
 
+Prefer to do it piece by piece, or just connect one client?
+
+```bash
+npm run build    # compile
+npm run claude   # register with Claude Code only (user-scoped: any project)
+npm run codex    # register with Codex only
+npm start        # run the MCP server directly over stdio (debugging only —
+                  # Claude Code/Codex launch it themselves, you don't need
+                  # this for normal use)
+```
+
+`npm run claude` / `npm run codex` are safe to re-run — they no-op if
+already registered.
+
 Then in Claude Code or Codex, just ask:
 
 > "use formpilot to dry-run the register-as-supplier form, show me the data,
