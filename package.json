@@ -8,6 +8,7 @@
   },
   "main": "./dist/src/index.js",
   "scripts": {
+    "setup": "bash scripts/setup.sh",
     "build": "tsc -p .",
     "start": "node dist/src/index.js",
     "test": "npm run build && node --test dist/test/*.test.js",

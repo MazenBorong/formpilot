@@ -18,35 +18,45 @@ testing, by driving a real browser — no database access, no app code changes.
   for humans.
 - Headless by default; pass `headed: true` (MCP) or `--headed` (CLI) to watch.
 
-## Setup (5 minutes)
+## Setup (one command)
 
 ```bash
 git clone <this repo> formpilot
 cd formpilot
-npm install     # also downloads a Chromium build via Playwright
-npm run build
+npm run setup
 ```
 
-Copy the example config and add the hosts/profiles you need:
+That installs dependencies (including a Chromium build via Playwright),
+builds the project, creates `formpilot.config.json` from the example if you
+don't already have one, links the `formpilot` CLI onto your PATH, **and
+registers the MCP server with whichever of Claude Code or Codex is installed
+on your machine** — no manual `claude mcp add` / config.toml editing. It's
+safe to re-run; every step is a no-op if already done.
+
+All it leaves you to do: open `formpilot.config.json` and add the host(s)
+you want to test to `allowedHosts` (and a login profile, if the form needs
+auth — see [Login](#login) below).
+
+Then in Claude Code or Codex, just ask:
+
+> "use formpilot to dry-run the register-as-supplier form, show me the data,
+> then submit it"
+
+The agent calls `inspect_form`, then `generate_test_data` (so you can
+see/edit the values first), then `fill_and_submit`.
+
+### Manual setup
+
+If you'd rather do it by hand, or `npm run setup` skipped something because
+neither CLI was detected:
 
 ```bash
+npm install && npm run build
 cp formpilot.config.example.json formpilot.config.json
-```
-
-### Claude Code
-
-```bash
 claude mcp add formpilot -- node /absolute/path/to/formpilot/dist/src/index.js
 ```
 
-Then in a session: *"use formpilot to dry-run the register-as-supplier form,
-show me the data, then submit it"*. Claude calls `inspect_form`, then
-`generate_test_data` (so you can see/edit the values first), then
-`fill_and_submit`.
-
-### Codex
-
-Add to `~/.codex/config.toml`:
+or, for Codex, add to `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.formpilot]
