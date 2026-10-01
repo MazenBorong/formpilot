@@ -3,50 +3,187 @@
 <head>
 <meta charset="utf-8" />
 <title>Register as Supplier</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f4f4f5;
+    --card: #ffffff;
+    --border: #e4e4e7;
+    --text: #09090b;
+    --muted: #71717a;
+    --ring: #09090b1a;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 48px 24px;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 -apple-system, "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 440px; margin: 0 auto; }
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+  .subtitle { color: var(--muted); font-size: 13px; margin: 0 0 24px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+  .card h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+  .field { margin-bottom: 16px; }
+  .field:last-of-type { margin-bottom: 0; }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  select:focus {
+    border-color: var(--text);
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+  input[type="file"] {
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checkbox-field label {
+    display: inline;
+    margin: 0;
+    font-weight: 400;
+  }
+  input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--text);
+  }
+  .actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  button {
+    appearance: none;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    background: var(--text);
+    color: #fff;
+    transition: opacity 0.15s;
+  }
+  button:hover { opacity: 0.85; }
+  #result {
+    margin-top: 16px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    font-size: 13px;
+  }
+</style>
 </head>
 <body>
-<h1>Register as Supplier</h1>
+<div class="page">
+  <h1>Register as Supplier</h1>
+  <p class="subtitle">Join our supplier network in a couple of minutes.</p>
 
-<form id="supplier-form">
-  <input type="hidden" name="source" value="formpilot-sample" />
+  <form id="supplier-form">
+    <input type="hidden" name="source" value="formpilot-sample" />
 
-  <section class="wizard-step" data-step="1">
-    <h2>Company details</h2>
-    <label for="companyName">Company name</label>
-    <input id="companyName" name="companyName" type="text" required maxlength="80" />
+    <section class="wizard-step card" data-step="1">
+      <h2>Company details</h2>
 
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" required />
+      <div class="field">
+        <label for="companyName">Company name</label>
+        <input id="companyName" name="companyName" type="text" required maxlength="80" />
+      </div>
 
-    <label for="phone">Phone</label>
-    <input id="phone" name="phone" type="tel" />
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required />
+      </div>
 
-    <label for="state">State</label>
-    <select id="state" name="state" required>
-      <option value="">Select a state</option>
-      <option value="SGR">Selangor</option>
-      <option value="KUL">Kuala Lumpur</option>
-      <option value="JHR">Johor</option>
-    </select>
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" />
+      </div>
 
-    <button type="button" id="next-btn">Next</button>
-  </section>
+      <div class="field">
+        <label for="state">State</label>
+        <select id="state" name="state" required>
+          <option value="">Select a state</option>
+          <option value="SGR">Selangor</option>
+          <option value="KUL">Kuala Lumpur</option>
+          <option value="JHR">Johor</option>
+        </select>
+      </div>
 
-  <section class="wizard-step" data-step="2" style="display:none">
-    <h2>Documents & agreement</h2>
-    <label for="regCert">Registration certificate (PDF)</label>
-    <input id="regCert" name="regCert" type="file" accept=".pdf,application/pdf" required />
+      <div class="actions">
+        <button type="button" id="next-btn">Next</button>
+      </div>
+    </section>
 
-    <label>
-      <input id="terms" name="terms" type="checkbox" required />
-      I agree to the supplier terms and conditions
-    </label>
+    <section class="wizard-step card" data-step="2" style="display:none">
+      <h2>Documents &amp; agreement</h2>
 
-    <button type="submit" id="submit-btn">Submit registration</button>
-  </section>
-</form>
+      <div class="field">
+        <label for="regCert">Registration certificate (PDF)</label>
+        <input id="regCert" name="regCert" type="file" accept=".pdf,application/pdf" required />
+      </div>
 
-<div id="result" role="alert" style="display:none"></div>
+      <div class="field checkbox-field">
+        <input id="terms" name="terms" type="checkbox" required />
+        <label for="terms">I agree to the supplier terms and conditions</label>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="submit-btn">Submit registration</button>
+      </div>
+    </section>
+  </form>
+
+  <div id="result" role="alert" style="display:none"></div>
+</div>
 
 <script>
   var form = document.getElementById('supplier-form');
